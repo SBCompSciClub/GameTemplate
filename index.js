@@ -1,7 +1,8 @@
-const ARC_RADIUS = 10;
 let mouseDown;
 let canvasElement;
 let canvasContext;
+let rx = 700;
+let ry = 300;
 function main()
 {
     canvasElement = document.getElementById("CanvasPainter");
@@ -13,28 +14,59 @@ function main()
     {
         alert("Error: Couldn't create canvasContext");
     }
-    canvasElement.onmousedown = (event) =>
-    {
-        mouseDown = true;
-        Draw(event);
-    }
-    canvasElement.onmousemove = (event) =>
-    {
-        if (mouseDown)
-        {
-            Draw(event);
-        }    
-    }
-    canvasElement.onmouseup = (event) =>
-    {
-        mouseDown = false;
-        Draw(event);
-    }
-}
-function Draw(event)
-{
+    canvasContext.fillStyle = "red";
     canvasContext.beginPath();
-    canvasContext.arc(event.x, event.y, ARC_RADIUS, 0, Math.PI * 2);
+    canvasContext.rect(rx,ry,50,50);
+    canvasContext.closePath();
     canvasContext.fill();
+    canvasContext.stroke();
+  //  console.log("asdf");
+//    canvasElement.addEventListener('keydown',check,true);
+    //console.log("jkl;");
 }
+function Draw()
+{
+    canvasContext.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    canvasContext.fillStyle = "white";
+    canvasContext.strokeStyle = "black"
+    canvasContext.rect(0, 0, canvasElement.width, canvasElement.height);
+    
+    canvasContext.fillStyle = "red";
+    canvasContext.beginPath();
+    canvasContext.rect(rx,ry,50,50);
+    canvasContext.closePath();
+    canvasContext.fill();
+    canvasContext.stroke();
+}
+
+function check(event) {
+    console.log("qwer");
+    var code = event.keyCode;
+    switch (code) {
+        case 37: 
+            console.log("Left");
+            rx+=-5;
+            break; //Left key
+            
+        case 38: 
+            console.log("Up"); 
+            ry+=-5;
+            break; //Up key
+            
+        case 39: 
+            console.log("Right"); 
+            rx+=5;
+            break; //Right key
+            
+        case 40: 
+            console.log("Down"); 
+            ry+=5;
+            break; //Down key
+            
+        default: alert(code); //Everything else
+    }
+    Draw();
+}
+
 main();
+window.addEventListener('keydown',check,true);
